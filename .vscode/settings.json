@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "bsp_dwt.h": "c",
+        "message_center.h": "c",
+        "daemon.h": "c"
+    }
+}

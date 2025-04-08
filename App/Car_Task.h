@@ -1,0 +1,61 @@
+#ifndef __BALANCE_TASK_H
+#define __BALANCE_TASK_H
+
+
+#include "FreeRTOS.h"
+#include "task.h"
+#include "main.h"
+#include "cmsis_os.h"
+#include "motor.h"
+#include "car.h"
+#include "bsp_dwt.h"
+
+#include "tim.h"
+
+osThreadId motorTaskHandle;
+osThreadId daemonTaskHandle;
+
+
+void StartMOTORTASK(void const *argument);
+void StartDAEMONTASK(void const *argument);
+
+/**
+ * @brief ³õÊ¼»¯»úÆ÷ÈËÈÎÎñ,ËùÓÐ³ÖÐøÔËÐÐµÄÈÎÎñ¶¼ÔÚÕâÀï³õÊ¼»¯
+ *
+ */
+void OSTaskInit()
+{
+		
+	osThreadDef(motortask, StartMOTORTASK, osPriorityAboveNormal, 0, 256);
+    motorTaskHandle = osThreadCreate(osThread(motortask), NULL); 
+	
+    osThreadDef(daemontask, StartDAEMONTASK, osPriorityNormal, 0, 128);
+    daemonTaskHandle = osThreadCreate(osThread(daemontask), NULL);
+}
+
+
+
+__attribute__((noreturn)) void StartMOTORTASK(void const *argument)
+{
+
+    for (;;)
+    {
+		RobotTask();
+        osDelay(10);
+    }
+}
+
+__attribute__((noreturn)) void StartDAEMONTASK(void const *argument)
+{
+    
+    
+    //LOGINFO("[freeRTOS] Daemon Task Start");
+    for (;;)
+    {
+        DaemonTask();
+        osDelay(10);
+    }
+}
+
+#endif
+
