@@ -62,6 +62,12 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Modules/Crc/crc8.c
     Modules/Crc/crc16.c
     Modules/can_comm/can_comm.c
+    Modules/INS/BMI088_driver.c
+    Modules/INS/BMI088.c
+    Modules/INS/ins_task.c
+    Modules/INS/kalman_filter.c
+    Modules/INS/QuaternionEKF.c
+    Modules/INS/user_lib.c
     Middlewares/Third_Party/SEGGER/RTT/SEGGER_RTT_printf.c
     Middlewares/Third_Party/SEGGER/RTT/SEGGER_RTT.c
     App/Init/init.c
@@ -72,6 +78,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
+    Modules/INS
     Bsp/dwt
     Bsp/usart
     Bsp/daemon

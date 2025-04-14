@@ -74,6 +74,8 @@ void motor_control()
 {
 	for(size_t i = 0; i<idx; i++)
 	{
+		motor[i]->PWM_Ref = motor[i]->PWM_Ref > 0 ? motor[i]->PWM_Ref + 500 : motor[i]->PWM_Ref;
+		motor[i]->PWM_Ref = motor[i]->PWM_Ref < 0 ? motor[i]->PWM_Ref - 500 : motor[i]->PWM_Ref;
 		motor[i]->PWM_Ref = motor[i]->PWM_Ref > 2000 ? 2000 : motor[i]->PWM_Ref;
 		motor[i]->PWM_Ref = motor[i]->PWM_Ref < -2000 ? -2000 : motor[i]->PWM_Ref;
 		SetSpeed(motor[i]->PWM_Ref, motor[i]);

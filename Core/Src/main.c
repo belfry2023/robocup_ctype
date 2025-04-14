@@ -23,6 +23,7 @@
 #include "dma.h"
 #include "rng.h"
 #include "rtc.h"
+#include "spi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -103,6 +104,7 @@ int main(void)
   MX_CAN1_Init();
   MX_CAN2_Init();
   MX_RNG_Init();
+  MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   V_Init();
   /* USER CODE END 2 */

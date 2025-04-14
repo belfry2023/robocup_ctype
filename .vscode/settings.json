@@ -2,6 +2,8 @@
     "files.associations": {
         "bsp_dwt.h": "c",
         "message_center.h": "c",
-        "daemon.h": "c"
+        "daemon.h": "c",
+        "ins_task.h": "c",
+        "user_lib.h": "c"
     }
 }

@@ -42,14 +42,14 @@ void car_init()
 			.Ki = 0,  // 0
 			.Kd = 3.5,  // 0
 			.IntegralLimit = 3000,
-			.MaxOut = 7200,
+			.MaxOut = 100,
 		},
 		.rotation_pid = {
 			.Kp = 2, // 4.5
 			.Ki = 0,  // 0
 			.Kd = 0,  // 0
 			.IntegralLimit = 3000,
-			.MaxOut = 12000,
+			.MaxOut = 2000,
 		},
 		.flag_reverse = 1,
 		.gpio = GPIOB,
@@ -68,6 +68,6 @@ void car_task()
 {
 	SubGetMessage(cmd_sub, &car_cmd);
     motor_cal();
-    l_motor->PWM_Ref = 3*(car_cmd.vx + car_cmd.wz/2);
-    r_motor->PWM_Ref = 3*(car_cmd.vx - car_cmd.wz/2);
+    l_motor->PWM_Ref = 2000 * (0.5 * car_cmd.vx + 0.5 * car_cmd.wz)/660;
+    r_motor->PWM_Ref = 2000 * (0.5 * car_cmd.vx - 0.5 * car_cmd.wz)/660;
 }
