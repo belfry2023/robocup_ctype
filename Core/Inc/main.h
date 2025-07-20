@@ -61,15 +61,12 @@ void Error_Handler(void);
 #define MAG_RST_GPIO_Port GPIOG
 #define INT_MAG_Pin GPIO_PIN_3
 #define INT_MAG_GPIO_Port GPIOG
-#define INT_MAG_EXTI_IRQn EXTI3_IRQn
 #define CS1_ACCEL_Pin GPIO_PIN_4
 #define CS1_ACCEL_GPIO_Port GPIOA
 #define INT_ACC_Pin GPIO_PIN_4
 #define INT_ACC_GPIO_Port GPIOC
-#define INT_ACC_EXTI_IRQn EXTI4_IRQn
 #define INT_GYRO_Pin GPIO_PIN_5
 #define INT_GYRO_GPIO_Port GPIOC
-#define INT_GYRO_EXTI_IRQn EXTI9_5_IRQn
 #define CS1_GYRO_Pin GPIO_PIN_0
 #define CS1_GYRO_GPIO_Port GPIOB
 

@@ -4,6 +4,9 @@
         "message_center.h": "c",
         "daemon.h": "c",
         "ins_task.h": "c",
-        "user_lib.h": "c"
+        "user_lib.h": "c",
+        "bsp_log.h": "c",
+        "bsp_can.h": "c",
+        "gpio.h": "c"
     }
 }

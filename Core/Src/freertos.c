@@ -46,7 +46,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-osThreadId testTaskHandle;
+
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 
