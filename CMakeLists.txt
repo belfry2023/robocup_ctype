@@ -21,8 +21,6 @@ endif()
 # Set the project name
 set(CMAKE_PROJECT_NAME robocup_ctype)
 
-# Include toolchain file
-include("cmake/gcc-arm-none-eabi.cmake")
 
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
@@ -52,27 +50,29 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Bsp/usart/bsp_usart.c
     Bsp/daemon/daemon.c
     Bsp/log/bsp_log.c
-    Bsp/can/bsp_can.c
+    Bsp/i2c/bsp_i2c.c
     Modules/Controller/PID.c
-    Modules/motor/motor.c
     Modules/remote/remote.c
     Modules/message_center/message_center.c
-    Modules/Vision/master_process.c
-    Modules/Vision/seasky_protocol.c
-    Modules/Crc/crc8.c
-    Modules/Crc/crc16.c
-    Modules/can_comm/can_comm.c
-    Modules/INS/BMI088_driver.c
-    Modules/INS/BMI088.c
-    Modules/INS/ins_task.c
-    Modules/INS/kalman_filter.c
-    Modules/INS/QuaternionEKF.c
-    Modules/INS/user_lib.c
+    Modules/k230/module_k230.c
+    Modules/motor/module_motor.c
+    Modules/motor/bsp_motor_iic.c
+    Modules/servo/module_servo.c
+    Modules/IR/module_ir.c
+    Modules/imu/BMI088_driver.c
+    Modules/imu/BMI088.c
+    Modules/key/module_key.c
+    Modules/step/module_step.c
+    Modules/imu/ins_task.c
+    Modules/algorithm/kalman_filter.c
+    Modules/algorithm/QuaternionEKF.c
+    Modules/algorithm/user_lib.c
+    App/gimbal/app_gimbal.c
+    App/cmd/app_cmd.c
+    App/chassis/app_chassis.c
+    App/task_init.c
     Middlewares/Third_Party/SEGGER/RTT/SEGGER_RTT_printf.c
     Middlewares/Third_Party/SEGGER/RTT/SEGGER_RTT.c
-    App/Init/init.c
-    App/Car/car.c
-    App/Cmd/cmd.c
 )
 
 # Add include paths
@@ -82,21 +82,28 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     Bsp/dwt
     Bsp/usart
     Bsp/daemon
-    Bsp/can
     Bsp/log
+    Bsp/i2c   
+    Modules
     Modules/Controller
-    Modules/motor
     Modules/remote
     Modules/message_center
-    Modules/Vision
-    Modules/Crc
-    Modules/can_comm
+    Modules/k230
+    Modules/motor
+    Modules/step
+    Modules/servo
+    Modules/imu
+    Modules/key
+    Modules/IR
+    Modules/algorithm
+    Modules/INS
+    App/chassis
+    App/cmd
+    App/gimbal
+    App
     Middlewares/Third_Party/SEGGER/Config
     Middlewares/Third_Party/SEGGER/RTT
-    App/Car
-    App/Cmd
-    App/Init
-    App
+    
 )
 
 # Add project symbols (macros)
@@ -111,14 +118,22 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     # Add user defined libraries
 )
 
-set(ELF_FILE ${CMAKE_PROJECT_NAME}.elf)
-set(HEX_FILE ${CMAKE_PROJECT_NAME}.hex)
-set(elfPath arm-none-eabi-objcopy.exe)
-set(downPath JFlash.exe)
-add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
-    COMMAND ${elfPath} -O ihex ${CMAKE_PROJECT_NAME}.elf ${CMAKE_PROJECT_NAME}.hex
-)
-add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
-    COMMAND ${downPath} -openprj ${PROJECT_SOURCE_DIR}/stm32.jflash -open ${CMAKE_PROJECT_NAME}.hex, 0x08000000 -auto -startapp -exit
+# SET(CMAKE_VERBOSE_MAKEFILE ON)
+SET(ELFFILE ${CMAKE_PROJECT_NAME}.elf)
+SET(HEXFILE ${CMAKE_PROJECT_NAME}.hex)
+SET(OBJCOPY arm-none-eabi-objcopy)
+SET(JFLASH JFlash)
+# Add custom commands to build the project
+ADD_CUSTOM_COMMAND(
+    TARGET ${CMAKE_PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E echo "Building ${CMAKE_PROJECT_NAME}"
+    COMMAND ${CMAKE_COMMAND} -E echo "Generating ELF file: ${ELFFILE}"
+    COMMAND ${CMAKE_COMMAND} -E echo "Generating HEX file: ${HEXFILE}"
+    COMMAND ${OBJCOPY} -O ihex ${ELFFILE} ${HEXFILE}
+    COMMAND ${CMAKE_COMMAND} -E echo "Build complete!"
+    COMMAND ${CMAKE_COMMAND} -E echo "Flashing ${HEXFILE} to the device"
+    COMMAND ${JFLASH} -openprj ${CMAKE_SOURCE_DIR}/stm32.jflash -open ${HEXFILE}, -8000000 -auto -startapp -exit
+    COMMAND ${CMAKE_COMMAND} -E echo "Flashing complete!"
 )
 

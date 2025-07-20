@@ -1,0 +1,7 @@
+C:/Users/belfry/gitcode/robocup_ctype/build/Debug/CMakeFiles/robocup_ctype.dir
+C:/Users/belfry/gitcode/robocup_ctype/build/Debug/CMakeFiles/edit_cache.dir
+C:/Users/belfry/gitcode/robocup_ctype/build/Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/belfry/gitcode/robocup_ctype/build/Debug/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
+C:/Users/belfry/gitcode/robocup_ctype/build/Debug/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir
+C:/Users/belfry/gitcode/robocup_ctype/build/Debug/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
+C:/Users/belfry/gitcode/robocup_ctype/build/Debug/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir
